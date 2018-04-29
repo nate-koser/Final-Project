@@ -1,0 +1,316 @@
+---
+title: "Acoustic Correlates of Stress in Lithuanian"
+subtitle: "Final Project Presentation"
+author: "Chris Oakden"
+date: "04/24/2018"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["http://www.jvcasillas.com/ru_xaringan/css/rutgers.css", "http://www.jvcasillas.com/ru_xaringan/css/rutgers-fonts.css"]
+    nature:
+      beforeInit: "http://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+```{r data/libraries, include = FALSE, warning=FALSE}
+library(tidyverse)
+data <- read_csv("../data_raw/M1Dur.csv")
+data <- data %>%
+  mutate(., f0_midpoint = as.double(f0_midpoint))
+data2 <- read_csv("../data_raw/M1Int.csv")
+```
+
+
+#1. Introduction
+
+--
+
+###Acoustic Study of Stress/Tone in Lithuanian
+
+--
+
+-Production study
+
+--
+
+-Examine acoustic correlates of stress
+
+--
+
+-Increased **duration**
+
+-Greater **intensity**
+
+-Vowel quality (**F1/F2**) changes
+
+-Higher pitch (**f0**)
+
+--
+
+###How is stress realized in a tone/pitch accent language?
+
+---
+
+#2. Preliminary Steps
+
+--
+
+###Data collection
+
+--
+
+-Record speakers in the Phonolab
+
+--
+
+-Segmentation of recordings using Praat TextGrids
+
+--
+
+-Extract acoustic values using Praat scripts
+
+--
+
+###Data organization
+
+--
+
+-Organize data, perform transformations, add additional variables in R
+
+---
+
+#3. Normalize duration within R
+
+--
+
+###Duration of fixed point in each frame sentence
+
+--
+
+-Find the **mean** of all fixed points
+
+-Create a **multiplier** using the mean and each fixed duration
+
+-Multiply that value by the duration of the vowels in the **corresponding** file
+
+--
+
+```{r fixes}
+fix_1 <- data %>%
+  filter(., TextGridLabel == "fix1") %>% 
+  summarize(., mean = mean(duration)) %>%
+  pull(.)
+
+fix_2 <- data %>%                                                             
+  filter(., TextGridLabel == "fix2") %>% 
+  summarize(., mean = mean(duration)) %>%
+  pull(.)
+```
+
+---
+
+#3. Normalize duration within R
+
+--
+
+###Create two multiplier columns (one for each fixed point)
+
+```{r fixes2}
+data_mults <- data %>%   
+  mutate(., multiplier1 = if_else(.$TextGridLabel=="fix1",                    
+                                  fix_1 / duration, as.double(NA))) %>%        #create mult.
+  fill(., multiplier1) %>%                                                     #fill in column
+  mutate(., multiplier2 = if_else(.$TextGridLabel=="fix2",                     #create mult.
+                                  fix_2 / duration, as.double(NA))) %>%             
+  fill(., multiplier2, .direction = "up") %>%                                  #fill in column
+  filter(., TextGridLabel != "fix1", TextGridLabel != "fix2")                  #delete fixed pts
+```
+
+---
+
+#3. Normalize duration within R
+
+--
+
+###Multiply by the correct multiplier 
+
+--
+
+-using `case_when` and `stringr::str_detect`
+
+```{r fixes3}
+data_normdur <- data_mults %>%
+  mutate(., NormalizedDuration = case_when(                                    #use case_when
+    str_detect(.$TextGridLabel, "1$") ~ duration * multiplier1,                #use str_detect
+    str_detect(.$TextGridLabel, "10$") ~ duration * multiplier1,               #and the last
+    str_detect(.$TextGridLabel, "2$") ~ duration * multiplier1,                #strings of the
+    str_detect(.$TextGridLabel, "20$") ~ duration * multiplier1,               #TextGrid labels
+    str_detect(.$TextGridLabel, "3$") ~ duration * multiplier1,
+    str_detect(.$TextGridLabel, "30$") ~ duration * multiplier1,
+    str_detect(.$TextGridLabel, "00$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "4$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "40$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "5$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "50$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "6$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "60$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "0$") ~ duration * multiplier1
+  )) %>%
+  select(., Filename, TextGridLabel, NormalizedDuration,                       #deselect 
+         F1_midpoint, F2_midpoint, f0_midpoint)                                #multiplier cols
+```
+
+---
+
+#4. Add new variables
+
+--
+
+###Add new variables for Vowel and Predicted Stress
+
+```{r vars}
+data_vars <- data_normdur %>%
+  mutate(., Vowel = case_when(                                                 #Vowel
+    str_detect(.$TextGridLabel, "^a") ~ "a",
+    str_detect(.$TextGridLabel, "^e") ~ "e",
+    str_detect(.$TextGridLabel, "^E") ~ "e",
+    str_detect(.$TextGridLabel, "^i") ~ "i",
+    str_detect(.$TextGridLabel, "^I") ~ "i",
+    str_detect(.$TextGridLabel, "^o") ~ "o",
+    str_detect(.$TextGridLabel, "^u") ~ "u",
+    str_detect(.$TextGridLabel, "^U") ~ "u",
+    str_detect(.$TextGridLabel, "^y") ~ "y"
+  )) %>%
+  mutate(., Stress = case_when(                                                #Predicted Stress
+    str_detect(.$TextGridLabel, "^a") ~ "N",
+    str_detect(.$TextGridLabel, "^e") ~ "N",
+    str_detect(.$TextGridLabel, "^E") ~ "Y",
+    str_detect(.$TextGridLabel, "^i") ~ "N",
+    str_detect(.$TextGridLabel, "^I") ~ "Y",
+    str_detect(.$TextGridLabel, "^o") ~ "N",
+    str_detect(.$TextGridLabel, "^u") ~ "N",
+    str_detect(.$TextGridLabel, "^U") ~ "Y",
+    str_detect(.$TextGridLabel, "^y") ~ "N"
+  ))
+```
+
+---
+
+#4. Add new variables
+
+--
+
+###...and for repetition
+
+--
+
+
+```{r vars2}
+data_rep <- data_vars %>%
+    mutate(., Repetition = case_when(
+    str_detect(.$Filename, "^M1A") ~ "1",
+    str_detect(.$Filename, "^M1B") ~ "2",
+    str_detect(.$Filename, "^M1C") ~ "3"
+  ))
+```
+
+
+---
+
+#5. Compile multiple dataframes
+
+--
+
+###Combine existing dataframe with file containing intensity data
+
+
+--
+
+
+```{r int}
+data_intensity <- data2 %>%                                          
+  filter(., TextGridLabel != "fix1", TextGridLabel != "fix2") %>%      #filter out fixed points
+  select(., Intensity)                                                 #select intensity
+
+data_final <- bind_cols(data_rep, data_intensity)                      #bind dataframes together
+head(data_final)
+```
+
+---
+
+#6. Preliminary EDA
+
+--
+
+###Basic generalizations from data ([u])
+
+```{r udata, echo=FALSE}
+udata <- data_final %>%
+  filter(., TextGridLabel %in% c("u2", "U2", "u5", "U5",
+                                "u20", "U20", "u50", "U50"))%>%
+  filter(., Filename != "M1A74", Filename != "M1B25")
+udata %>%
+  group_by(., Stress) %>%
+  summarize(., dur = (mean(NormalizedDuration)) * 1000,
+               int = mean(Intensity),
+               F1 = mean(F1_midpoint),
+               F2 = mean(F2_midpoint),
+               F0 = mean(f0_midpoint)) %>% knitr::kable(., format = 'html', digits = 2)
+```
+
+--
+
+-Increased **duration**, **intensity**, **pitch** between stressed and unstressed [u]
+
+--
+
+-No real change in **F1**, ~200 Hz change in **F2**
+
+
+---
+#7. Next steps
+
+--
+
+###Linear mixed effects models
+
+--
+
+###Five models for each of two vowels [u] and [i]
+
+--
+
+###Criterion: acoustic correlate
+
+--
+
+###Predictors: **predicted stress**, # of syllables, segmental environment
+
+--
+
+###Random effects: # of syllables, segmental environment, repetition
+
+--
+
+###Isolate effect of predicted stress using **nested model comparison**
+
+---
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+##Thank you!]
+
+

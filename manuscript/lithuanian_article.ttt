@@ -1,0 +1,264 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table1}Normalized Duration in ms by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [u] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r}
+\hline
+Stress & Frame & Syllnum & Mean & SD\\
+\hline
+N & 1 & four & 47.06 & 13.00\\
+\hline
+N & 1 & three & 46.03 & 12.54\\
+\hline
+N & 2 & four & 44.52 & 9.07\\
+\hline
+N & 2 & three & 44.97 & 8.96\\
+\hline
+Y & 1 & four & 61.51 & 12.68\\
+\hline
+Y & 1 & three & 58.07 & 12.87\\
+\hline
+Y & 2 & four & 52.87 & 12.43\\
+\hline
+Y & 2 & three & 57.29 & 13.51\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table2}Normalized Duration in ms by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [i] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r}
+\hline
+Stress & Frame & Syllnum & Mean & SD\\
+\hline
+N & 1 & four & 48.19 & 17.87\\
+\hline
+N & 1 & three & 52.15 & 10.78\\
+\hline
+N & 2 & four & 36.73 & 10.72\\
+\hline
+N & 2 & three & 50.16 & 7.68\\
+\hline
+Y & 1 & four & 69.58 & 17.76\\
+\hline
+Y & 1 & three & 62.38 & 7.00\\
+\hline
+Y & 2 & four & 58.71 & 14.71\\
+\hline
+Y & 2 & three & 60.55 & 11.02\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table3}Intensity in dB by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [u] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r}
+\hline
+Stress & Frame & Syllnum & Mean & SD\\
+\hline
+N & 1 & four & 72.78 & 3.51\\
+\hline
+N & 1 & three & 71.59 & 2.82\\
+\hline
+N & 2 & four & 71.77 & 3.28\\
+\hline
+N & 2 & three & 70.59 & 3.17\\
+\hline
+Y & 1 & four & 75.35 & 1.94\\
+\hline
+Y & 1 & three & 74.31 & 2.63\\
+\hline
+Y & 2 & four & 74.62 & 2.89\\
+\hline
+Y & 2 & three & 74.49 & 2.24\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table4}Intensity in dB by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [i] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r}
+\hline
+Stress & Frame & Syllnum & Mean & SD\\
+\hline
+N & 1 & four & 71.60 & 2.57\\
+\hline
+N & 1 & three & 72.50 & 2.72\\
+\hline
+N & 2 & four & 70.33 & 2.50\\
+\hline
+N & 2 & three & 70.95 & 3.01\\
+\hline
+Y & 1 & four & 73.89 & 2.61\\
+\hline
+Y & 1 & three & 74.72 & 2.67\\
+\hline
+Y & 2 & four & 74.30 & 2.79\\
+\hline
+Y & 2 & three & 75.04 & 2.14\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table5}F1 and F2 in Hz by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [u] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r|r|r}
+\hline
+Stress & Frame & Syllnum & F1 Mean & F1 SD & F2 Mean & F2 SD\\
+\hline
+N & 1 & four & 391.92 & 56.22 & 1061.12 & 273.52\\
+\hline
+N & 1 & three & 412.99 & 74.74 & 1209.89 & 340.21\\
+\hline
+N & 2 & four & 448.34 & 97.11 & 1308.99 & 473.69\\
+\hline
+N & 2 & three & 415.44 & 53.30 & 1322.63 & 357.97\\
+\hline
+Y & 1 & four & 429.93 & 99.92 & 1106.91 & 546.28\\
+\hline
+Y & 1 & three & 418.43 & 68.92 & 1160.00 & 376.57\\
+\hline
+Y & 2 & four & 400.82 & 33.63 & 961.73 & 164.24\\
+\hline
+Y & 2 & three & 407.43 & 62.91 & 1062.02 & 253.99\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table6}F1 and F2 in Hz by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [i] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r|r|r}
+\hline
+Stress & Frame & Syllnum & F1 Mean & F1 SD & F2 Mean & F2 SD\\
+\hline
+N & 1 & four & 390.04 & 37.98 & 1536.73 & 256.18\\
+\hline
+N & 1 & three & 355.31 & 27.85 & 1712.59 & 191.61\\
+\hline
+N & 2 & four & 382.69 & 38.29 & 1475.63 & 234.46\\
+\hline
+N & 2 & three & 360.21 & 32.17 & 1672.65 & 190.02\\
+\hline
+Y & 1 & four & 386.69 & 34.22 & 1674.45 & 176.81\\
+\hline
+Y & 1 & three & 360.50 & 32.08 & 1789.56 & 143.83\\
+\hline
+Y & 2 & four & 388.68 & 30.67 & 1588.71 & 195.52\\
+\hline
+Y & 2 & three & 370.20 & 25.00 & 1714.34 & 169.62\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table7}F0 in Hz by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [u] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r}
+\hline
+Stress & Frame & Syllnum & Mean & SD\\
+\hline
+N & 1 & four & 120.73 & 8.14\\
+\hline
+N & 1 & three & 117.94 & 8.41\\
+\hline
+N & 2 & four & 105.81 & 8.15\\
+\hline
+N & 2 & three & 108.11 & 6.77\\
+\hline
+Y & 1 & four & 148.59 & 19.88\\
+\hline
+Y & 1 & three & 150.10 & 20.31\\
+\hline
+Y & 2 & four & 168.81 & 26.73\\
+\hline
+Y & 2 & three & 168.51 & 26.41\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:Table8}F0 in Hz by Predicted Stress (Stress), Frame Sentence (Frame), and Syllable Count (Syllnum), [i] Vowel}
+\centering
+\begin{tabular}[t]{l|r|l|r|r}
+\hline
+Stress & Frame & Syllnum & Mean & SD\\
+\hline
+N & 1 & four & 112.12 & 10.11\\
+\hline
+N & 1 & three & 113.12 & 7.37\\
+\hline
+N & 2 & four & 104.15 & 11.06\\
+\hline
+N & 2 & three & 101.99 & 5.11\\
+\hline
+Y & 1 & four & 143.34 & 19.64\\
+\hline
+Y & 1 & three & 140.25 & 10.42\\
+\hline
+Y & 2 & four & 153.27 & 23.28\\
+\hline
+Y & 2 & three & 152.17 & 22.49\\
+\hline
+\end{tabular}
+\end{table*}
+\efloatseparator
+ 
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\begin{center}
+\caption{Logistic Regression Models, [i]}
+\begin{tabular}{r|cccc}
+& $\beta$ & $se$ & $z$ & $p$ \\
+\hline \
+\textbf{Repetition Model} \\
+F0 & 7.44 & 2.02 & 3.68 & <0.05 \\
+Duration & 1.44 & 0.56 & 2.56 & <0.05 \\
+\hline
+\textbf{Frame Sentence Model} \\
+F0 & 8.13 & 3.25 & 2.5 & <0.05 \\
+Duration & 1.51 & 0.67 & 2.26 & <0.05 \\
+\hline
+\textbf{Repetition+Frame Model} \\
+F0 & 8.05 & 2.36 & 3.42 & <0.05 \\
+Duration & 1.58 & 0.66 & 2.4 & <0.05 \\
+\end{tabular}
+\end{center}
+\end{table*}
+\efloatseparator
+ 

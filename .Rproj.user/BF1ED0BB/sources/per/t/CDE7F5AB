@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524157458318.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "752441785",
+    "id" : "CDE7F5AB",
+    "lastKnownWriteTime" : 1524834044,
+    "last_content_update" : 1524834044568,
+    "path" : "~/Desktop/Final Project/scripts/mixed_effects_models.R",
+    "project_path" : "scripts/mixed_effects_models.R",
+    "properties" : {
+        "cursorPosition" : "393,34",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

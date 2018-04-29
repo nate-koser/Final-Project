@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524154050902.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2785709346",
+    "id" : "3EEE09CB",
+    "lastKnownWriteTime" : 1524836490,
+    "last_content_update" : 1524836490275,
+    "path" : "~/Desktop/Final Project/scripts/eda.R",
+    "project_path" : "scripts/eda.R",
+    "properties" : {
+        "cursorPosition" : "173,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Acoustic Correlates of Stress in Lithuanian</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Chris Oakden" />
+    <meta name="date" content="2018-04-24" />
+    <link rel="stylesheet" href="http://www.jvcasillas.com/ru_xaringan/css/rutgers.css" type="text/css" />
+    <link rel="stylesheet" href="http://www.jvcasillas.com/ru_xaringan/css/rutgers-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Acoustic Correlates of Stress in Lithuanian
+## Final Project Presentation
+### Chris Oakden
+### 04/24/2018
+
+---
+
+
+
+
+
+
+#1. Introduction
+
+--
+
+###Acoustic Study of Stress/Tone in Lithuanian
+
+--
+
+-Production study
+
+--
+
+-Examine acoustic correlates of stress
+
+--
+
+-Increased **duration**
+
+-Greater **intensity**
+
+-Vowel quality (**F1/F2**) changes
+
+-Higher pitch (**f0**)
+
+--
+
+###How is stress realized in a tone/pitch accent language?
+
+---
+
+#2. Preliminary Steps
+
+--
+
+###Data collection
+
+--
+
+-Record speakers in the Phonolab
+
+--
+
+-Segmentation of recordings using Praat TextGrids
+
+--
+
+-Extract acoustic values using Praat scripts
+
+--
+
+###Data organization
+
+--
+
+-Organize data, perform transformations, add additional variables in R
+
+---
+
+#3. Normalize duration within R
+
+--
+
+###Duration of fixed point in each frame sentence
+
+--
+
+-Find the **mean** of all fixed points
+
+-Create a **multiplier** using the mean and each fixed duration
+
+-Multiply that value by the duration of the vowels in the **corresponding** file
+
+--
+
+
+```r
+fix_1 &lt;- data %&gt;%
+  filter(., TextGridLabel == "fix1") %&gt;% 
+  summarize(., mean = mean(duration)) %&gt;%
+  pull(.)
+
+fix_2 &lt;- data %&gt;%                                                             
+  filter(., TextGridLabel == "fix2") %&gt;% 
+  summarize(., mean = mean(duration)) %&gt;%
+  pull(.)
+```
+
+---
+
+#3. Normalize duration within R
+
+--
+
+###Create two multiplier columns (one for each fixed point)
+
+
+```r
+data_mults &lt;- data %&gt;%   
+  mutate(., multiplier1 = if_else(.$TextGridLabel=="fix1",                    
+                                  fix_1 / duration, as.double(NA))) %&gt;%        #create mult.
+  fill(., multiplier1) %&gt;%                                                     #fill in column
+  mutate(., multiplier2 = if_else(.$TextGridLabel=="fix2",                     #create mult.
+                                  fix_2 / duration, as.double(NA))) %&gt;%             
+  fill(., multiplier2, .direction = "up") %&gt;%                                  #fill in column
+  filter(., TextGridLabel != "fix1", TextGridLabel != "fix2")                  #delete fixed pts
+```
+
+---
+
+#3. Normalize duration within R
+
+--
+
+###Multiply by the correct multiplier 
+
+--
+
+-using `case_when` and `stringr::str_detect`
+
+
+```r
+data_normdur &lt;- data_mults %&gt;%
+  mutate(., NormalizedDuration = case_when(                                    #use case_when
+    str_detect(.$TextGridLabel, "1$") ~ duration * multiplier1,                #use str_detect
+    str_detect(.$TextGridLabel, "10$") ~ duration * multiplier1,               #and the last
+    str_detect(.$TextGridLabel, "2$") ~ duration * multiplier1,                #strings of the
+    str_detect(.$TextGridLabel, "20$") ~ duration * multiplier1,               #TextGrid labels
+    str_detect(.$TextGridLabel, "3$") ~ duration * multiplier1,
+    str_detect(.$TextGridLabel, "30$") ~ duration * multiplier1,
+    str_detect(.$TextGridLabel, "00$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "4$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "40$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "5$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "50$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "6$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "60$") ~ duration * multiplier2,
+    str_detect(.$TextGridLabel, "0$") ~ duration * multiplier1
+  )) %&gt;%
+  select(., Filename, TextGridLabel, NormalizedDuration,                       #deselect 
+         F1_midpoint, F2_midpoint, f0_midpoint)                                #multiplier cols
+```
+
+---
+
+#4. Add new variables
+
+--
+
+###Add new variables for Vowel and Predicted Stress
+
+
+```r
+data_vars &lt;- data_normdur %&gt;%
+  mutate(., Vowel = case_when(                                                 #Vowel
+    str_detect(.$TextGridLabel, "^a") ~ "a",
+    str_detect(.$TextGridLabel, "^e") ~ "e",
+    str_detect(.$TextGridLabel, "^E") ~ "e",
+    str_detect(.$TextGridLabel, "^i") ~ "i",
+    str_detect(.$TextGridLabel, "^I") ~ "i",
+    str_detect(.$TextGridLabel, "^o") ~ "o",
+    str_detect(.$TextGridLabel, "^u") ~ "u",
+    str_detect(.$TextGridLabel, "^U") ~ "u",
+    str_detect(.$TextGridLabel, "^y") ~ "y"
+  )) %&gt;%
+  mutate(., Stress = case_when(                                                #Predicted Stress
+    str_detect(.$TextGridLabel, "^a") ~ "N",
+    str_detect(.$TextGridLabel, "^e") ~ "N",
+    str_detect(.$TextGridLabel, "^E") ~ "Y",
+    str_detect(.$TextGridLabel, "^i") ~ "N",
+    str_detect(.$TextGridLabel, "^I") ~ "Y",
+    str_detect(.$TextGridLabel, "^o") ~ "N",
+    str_detect(.$TextGridLabel, "^u") ~ "N",
+    str_detect(.$TextGridLabel, "^U") ~ "Y",
+    str_detect(.$TextGridLabel, "^y") ~ "N"
+  ))
+```
+
+---
+
+#4. Add new variables
+
+--
+
+###...and for repetition
+
+--
+
+
+
+```r
+data_rep &lt;- data_vars %&gt;%
+    mutate(., Repetition = case_when(
+    str_detect(.$Filename, "^M1A") ~ "1",
+    str_detect(.$Filename, "^M1B") ~ "2",
+    str_detect(.$Filename, "^M1C") ~ "3"
+  ))
+```
+
+
+---
+
+#5. Compile multiple dataframes
+
+--
+
+###Combine existing dataframe with file containing intensity data
+
+
+--
+
+
+
+```r
+data_intensity &lt;- data2 %&gt;%                                          
+  filter(., TextGridLabel != "fix1", TextGridLabel != "fix2") %&gt;%      #filter out fixed points
+  select(., Intensity)                                                 #select intensity
+
+data_final &lt;- bind_cols(data_rep, data_intensity)                      #bind dataframes together
+head(data_final)
+```
+
+```
+## # A tibble: 6 x 10
+##   Filename TextGridLabel NormalizedDuration F1_midpoint F2_midpoint
+##   &lt;chr&gt;    &lt;chr&gt;                      &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+## 1 M1A10    a1                        0.0470        487.       1317.
+## 2 M1A10    U2                        0.0506        388.       1906.
+## 3 M1A10    o3                        0.181         589.        911.
+## 4 M1A10    a4                        0.0361        482.       1330.
+## 5 M1A10    U5                        0.0407        392.        961.
+## 6 M1A10    o6                        0.108         820.       1732.
+## # ... with 5 more variables: f0_midpoint &lt;dbl&gt;, Vowel &lt;chr&gt;, Stress &lt;chr&gt;,
+## #   Repetition &lt;chr&gt;, Intensity &lt;dbl&gt;
+```
+
+---
+
+#6. Preliminary EDA
+
+--
+
+###Basic generalizations from data ([u])
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Stress &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; dur &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; int &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; F1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; F2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; F0 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; N &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 71.38 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 415.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1246.91 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 113.03 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Y &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57.51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 74.54 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 413.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1090.91 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 159.26 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+-Increased **duration**, **intensity**, **pitch** between stressed and unstressed [u]
+
+--
+
+-No real change in **F1**, ~200 Hz change in **F2**
+
+
+---
+#7. Next steps
+
+--
+
+###Linear mixed effects models
+
+--
+
+###Five models for each of two vowels [u] and [i]
+
+--
+
+###Criterion: acoustic correlate
+
+--
+
+###Predictors: **predicted stress**, # of syllables, segmental environment
+
+--
+
+###Random effects: # of syllables, segmental environment, repetition
+
+--
+
+###Isolate effect of predicted stress using **nested model comparison**
+
+---
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+##Thank you!]
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="http://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

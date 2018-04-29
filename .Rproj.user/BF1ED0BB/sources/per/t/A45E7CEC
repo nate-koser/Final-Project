@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524156449671.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2994499960",
+    "id" : "A45E7CEC",
+    "lastKnownWriteTime" : 1524158158,
+    "last_content_update" : 1524158158905,
+    "path" : "~/Desktop/Final Project/scripts/create_data.R",
+    "project_path" : "scripts/create_data.R",
+    "properties" : {
+        "cursorPosition" : "492,79",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

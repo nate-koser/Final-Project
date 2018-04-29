@@ -1,0 +1,97 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{../figs/Picture1.png}
+\caption{Example prompt}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure2-1.pdf}
+\caption{\label{fig:Figure2}Mean Normalized Duration in ms by Predicted
+Stress (N=unstressed, Y=stressed), {[}u{]} and {[}i{]}}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure3-1.pdf}
+\caption{\label{fig:Figure3}Mean Intensity in dB by Predicted Stress
+(N=unstressed, Y=stressed), {[}u{]} and {[}i{]}}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure4-1.pdf}
+\caption{\label{fig:Figure4}F1/F2 Plot, {[}u{]} Vowel (Trisyllabic Words)}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure5-1.pdf}
+\caption{\label{fig:Figure5}F1/F2 Plot, {[}i{]} Vowel (Trisyllabic Words)}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure6-1.pdf}
+\caption{\label{fig:Figure6}Mean F0 in Hz by Predicted Stress (N=unstressed,
+Y=stressed), {[}u{]} and {[}i{]}}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure7-1.pdf}
+\caption{\label{fig:Figure7}Heteroskedastic residuals for F0 LME model,
+{[}u{]} vowel}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure8-1.pdf}
+\caption{\label{fig:Figure8}Heteroskedastic residuals for F0 LME model,
+{[}i{]} vowel}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure9-1.pdf}
+\caption{\label{fig:Figure9}Histogram of F0 Values Separated by Stress,
+{[}u{]} Vowel}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{lithuanian_article_files/figure-latex/Figure10-1.pdf}
+\caption{\label{fig:Figure10}Histogram of F0 Values Separated by Stress,
+{[}i{]} Vowel}
+\end{figure*}
+\efloatseparator
+ 
